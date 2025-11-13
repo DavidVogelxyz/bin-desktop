@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Name:     artix_cinnamon_audiostart
+# Author:   David Vogel <david@davidvogel.xyz>
+# Date:     2025 Nov 12, Wed
+# License:  GPL v3.0
+# Desc:     `artix_cinnamon_audiostart` starts audio for Artix Cinnamon when logging in.
+
+# Kill any running audio processes
+kill_audio() {
+    for p in pipewire pipewire-pulse wireplumber; do
+        pkill "$p"
+    done
+}
+
+# Start all audio processes
+start_audio() {
+    for p in pipewire pipewire-pulse wireplumber; do
+        "/usr/bin/${p}" &
+    done
+}
+
+main() {
+    kill_audio
+
+    start_audio
+}
+
+main
