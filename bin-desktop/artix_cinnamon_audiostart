@@ -15,7 +15,7 @@ kill_audio() {
 
 # Start all audio processes
 start_audio() {
-    for p in pipewire pipewire-pulse wireplumber; do
+    for p in pipewire; do
         "/usr/bin/${p}" &
     done
 }
