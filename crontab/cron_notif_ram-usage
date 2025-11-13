@@ -1,0 +1,2 @@
+# run `notif_ram-usage` every 5 minutes; notify if above threshold
+5 * * * * ~/.local/bin/bin-desktop/notif_ram-usage

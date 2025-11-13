@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Name:     notif_ram-usage
+# Author:   David Vogel <david@davidvogel.xyz>
+# Date:     2025 Mar 11, Tue
+# License:  GPL v3.0
+# Desc:     `notif_ram-usage` generates a notification if RAM usage is above threshold.
+
+export threshold="69"
+export DISPLAY=:0
+
+notif() {
+    notify-send \
+        -e \
+        -t 3000 \
+        "MEMORY USAGE CRITICAL - ${usage}%" \
+        "RAM usage is above the threshold of ${threshold}%!"
+}
+
+get_ram_usage() {
+    while read -r mem total used other; do
+        usage="$(echo "scale=0; $used * 100 / $total" | bc)"
+    done < <(free -m | grep -i mem)
+}
+
+get_ram_usage && if (( usage > threshold )); then notif; fi
